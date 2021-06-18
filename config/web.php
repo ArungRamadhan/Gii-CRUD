@@ -5,7 +5,6 @@ $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic',
-    'name' => 'Arung Ramadhan',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [
@@ -15,7 +14,7 @@ $config = [
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'arung_12345',
+            'cookieValidationKey' => '1911081003',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',

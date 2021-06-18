@@ -3,18 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use yii\helpers\ArrayHelper;
-use app\models\Mahasiswa;
-use app\models\MahasiswaSearch;
-use app\models\Prodi;
+use app\models\Jenis1;
+use app\models\Jenis1Search;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * MahasiswaController implements the CRUD actions for Mahasiswa model.
+ * Jenis1Controller implements the CRUD actions for Jenis1 model.
  */
-class MahasiswaController extends Controller
+class Jenis1Controller extends Controller
 {
     /**
      * {@inheritdoc}
@@ -32,12 +30,12 @@ class MahasiswaController extends Controller
     }
 
     /**
-     * Lists all Mahasiswa models.
+     * Lists all Jenis1 models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new MahasiswaSearch();
+        $searchModel = new Jenis1Search();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -47,7 +45,7 @@ class MahasiswaController extends Controller
     }
 
     /**
-     * Displays a single Mahasiswa model.
+     * Displays a single Jenis1 model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -60,15 +58,13 @@ class MahasiswaController extends Controller
     }
 
     /**
-     * Creates a new Mahasiswa model.
+     * Creates a new Jenis1 model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Mahasiswa();
-        $id_prodi = Prodi::find()->all();
-        $id_prodi = ArrayHelper::map($id_prodi,'id_prodi','prodi');
+        $model = new Jenis1();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -76,12 +72,11 @@ class MahasiswaController extends Controller
 
         return $this->render('create', [
             'model' => $model,
-            'id_prodi' => $id_prodi
         ]);
     }
 
     /**
-     * Updates an existing Mahasiswa model.
+     * Updates an existing Jenis1 model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -90,9 +85,6 @@ class MahasiswaController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $id_prodi = Prodi::find()->all();
-        $id_prodi = ArrayHelper::map($id_prodi,'id_prodi','prodi');
-
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -100,12 +92,11 @@ class MahasiswaController extends Controller
 
         return $this->render('update', [
             'model' => $model,
-            'id_prodi' => $id_prodi
         ]);
     }
 
     /**
-     * Deletes an existing Mahasiswa model.
+     * Deletes an existing Jenis1 model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -119,15 +110,15 @@ class MahasiswaController extends Controller
     }
 
     /**
-     * Finds the Mahasiswa model based on its primary key value.
+     * Finds the Jenis1 model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Mahasiswa the loaded model
+     * @return Jenis1 the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Mahasiswa::findOne($id)) !== null) {
+        if (($model = Jenis1::findOne($id)) !== null) {
             return $model;
         }
 

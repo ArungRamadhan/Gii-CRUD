@@ -54,6 +54,14 @@ class SiteController extends Controller
             ],
         ];
     }
+    public function actionHello1($nama="Syarif Hidayat")
+    {
+        return "<h2>Hello " . $nama . "</h2>";
+    }
+    public function actionHello2()
+    {
+        return $this->render('say',['pesan'=>'Hello World']);
+    }
     public function actionFitur()
     {
         return $this->render('fitur');
@@ -67,18 +75,16 @@ class SiteController extends Controller
     {
         return $this->render('index');
     }
+
     public function actionEntry()
     {
         $model = new EntryForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate())
-            {
-            //data yang valid diperoleh pada $model
-            //lakukkan sesuatu terhadap $model di sini ...
-                return $this->render('entry-confirm', ['model' => $model]);
-            }
-            else { //menampilkan form pada halaman, ada atau tidaknya kegagalan validasi tidak masalah
-                    return $this->render('entry', ['model' => $model]);
-            }
+        if ($model->load(Yii::$app->request->post()) && $model->validate()){
+    
+    return $this->render('entry-confirm', ['model' => $model]);}
+    else {
+        return $this->render('entry',['model' => $model]);
+    }
     }
     /**
      * Login action.
