@@ -7,11 +7,13 @@ use Yii;
 /**
  * This is the model class for table "prodi".
  *
- * @property int $id_prodi
+ * @property int $id
+ * @property int $id_fakultas
  * @property string $prodi
  * @property string $keterangan
  *
  * @property Mahasiswa[] $mahasiswas
+ * @property Fakultas $fakultas
  */
 class Prodi extends \yii\db\ActiveRecord
 {
@@ -29,9 +31,10 @@ class Prodi extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['prodi', 'keterangan'], 'required'],
-            [['prodi'], 'string', 'max' => 20],
-            [['keterangan'], 'string', 'max' => 30],
+            [['id_fakultas', 'prodi', 'keterangan'], 'required'],
+            [['id_fakultas'], 'integer'],
+            [['prodi', 'keterangan'], 'string', 'max' => 50],
+            [['id_fakultas'], 'exist', 'skipOnError' => true, 'targetClass' => Fakultas::className(), 'targetAttribute' => ['id_fakultas' => 'id']],
         ];
     }
 
@@ -41,7 +44,8 @@ class Prodi extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_prodi' => 'Id Prodi',
+            'id' => 'ID',
+            'id_fakultas' => 'Id Fakultas',
             'prodi' => 'Prodi',
             'keterangan' => 'Keterangan',
         ];
@@ -52,8 +56,32 @@ class Prodi extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getMahasiswas()
+
+    /**
+     * Gets query for [[Fakultas]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFakultas()
     {
-        return $this->hasMany(Mahasiswa::className(), ['id_prodi' => 'id_prodi']);
+        return $this->hasOne(Fakultas::className(), ['id' => 'id_fakultas']);
+    }
+
+    public static function getProdiList($fakultasID, $dependent = false)
+    {
+        // $subCategory = self::find()
+        // ->select(['prodi as name', 'id'])
+        // ->where(['id_fakultas' => $fakultasID])
+        // ->asArray()
+        // ->all();
+
+        // return $subCategory;
+
+        $subCategory = self::find()->where(['id_fakultas'=>$fakultasID]);
+        if ($dependent=="") {
+            return $subCategory->select(['id','prodi as name'])->asArray()->all();
+        } else {
+            return $subCategory->select(['prodi'])->indexBy('id')->column();
+        }
     }
 }
